@@ -5,7 +5,13 @@ import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header";
+import {useSelector, useDispatch} from "react-redux";
+import {setPosts} from "./redux/slices/postsSlice";
+
 function App() {
+
+    const posts = useSelector((state) => state.posts.posts)
+    const dispatch = useDispatch()
     const [lastHundredPosts, setLastHundredPosts] = React.useState([])
     let getNewPosts = () => {
         axios.get('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty')
@@ -17,7 +23,7 @@ function App() {
             .then((values) =>
                 values.map((el) => el.data)
             )
-            .then((finalResponse) => setLastHundredPosts(finalResponse))
+            .then((finalResponse) => dispatch(setPosts(finalResponse)))
     }
     React.useEffect(() => {
         getNewPosts()
@@ -38,7 +44,7 @@ function App() {
                         <Route path="/">
                             <MainPage
                                 getPosts={getNewPosts}
-                                lastHundredPosts={lastHundredPosts}
+                                lastHundredPosts={posts}
                             />
                         </Route>
                     </Switch>

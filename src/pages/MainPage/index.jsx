@@ -1,5 +1,7 @@
 import React from 'react';
 import './MainPage.css'
+import {useSelector, useDispatch} from "react-redux";
+
 const MainPage = ({lastHundredPosts, getPosts}) => {
     return (
         <div className={'MainPage'} >
