@@ -1,0 +1,21 @@
+.MainPage .post {
+  padding: 10px;
+  margin: 15px;
+  border: 3px solid #086ba2;
+  border-radius: 5px;
+}
+.MainPage .post .postTitle {
+  font-weight: 500;
+  font-size: 18px;
+}
+.MainPage .post .postInfo .postRating {
+  font-size: 14px;
+}
+.MainPage .post .postInfo .postAuthorAndTime .author {
+  color: #00608b;
+}
+.MainPage .post .postInfo .postAuthorAndTime .time {
+  color: #00608b;
+}
+
+/*# sourceMappingURL=MainPage.css.map */
