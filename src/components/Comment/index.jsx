@@ -20,9 +20,6 @@ const Comment = ({comment}) => {
     const nestedComments = (openNestedComments).map(comment => {
         return <Comment key={comment.id} comment={comment} type="child"/>
     })
-    React.useEffect(() => {
-        console.log(openNestedComments)
-    },[openNestedComments])
     return (
         <div className="commentWrapper" key={comment.id}>
             <p>

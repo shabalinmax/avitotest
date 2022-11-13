@@ -6,15 +6,14 @@ import MainPage from "./pages/MainPage";
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header";
 import {useSelector, useDispatch} from "react-redux";
-import {setPosts,} from "./redux/slices/postsSlice";
+import {setPosts, setLoading } from "./redux/slices/postsSlice";
 import Loader from "./components/Loader";
 function App() {
-    const [errorPageOpened, setErrorPageOpened ] = React.useState(false)
-    const [isLoadingPosts, setIsLoadingPosts ] = React.useState(true)
-    const posts = useSelector((state) => state.posts.posts)
+    const isLoadingPosts = useSelector((state) => state.posts.loadingPageOpened)
+    const error = useSelector((state) => state.posts.error)
     const dispatch = useDispatch()
-    const [lastHundredPosts, setLastHundredPosts] = React.useState([])
-    let getNewPosts = () => {
+    let getNewPosts = (isNeedLoadingPage) => {
+        isNeedLoadingPage ? dispatch(setLoading(true)) : dispatch(setLoading(false))
         axios.get('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty')
             .then((res) =>
                 Promise.all(res.data.slice(0, 100).map((el) =>
@@ -25,19 +24,18 @@ function App() {
                 values.map((el) => el.data)
             )
             .then((finalResponse) => dispatch(setPosts(finalResponse)))
-            .then(() => (setIsLoadingPosts(false)))
+            .then(() => (dispatch(setLoading(false))))
             .catch(function(err) {
                 console.log(err.message)
             })
     }
+
     React.useEffect(() => {
-        getNewPosts()
+        getNewPosts(true)
         setInterval(() => {
-            getNewPosts()
+            getNewPosts(false)
         }, 60*1000)
     }, [])
-
-
     return (
             <Router>
                 <div className={'App'}>
@@ -52,8 +50,7 @@ function App() {
                                     <Loader/>
                                     :
                                     <MainPage
-                                        getPosts={getNewPosts}
-                                        lastHundredPosts={posts}/>
+                                        getPosts={getNewPosts}/>
                             }
                         </Route>
                     </Switch>

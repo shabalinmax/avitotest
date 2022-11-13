@@ -2,9 +2,9 @@ import { createSlice,  } from '@reduxjs/toolkit'
 
 const initialState = {
     posts: [],
-    loading: false,
-    error: false,
-    openedPost: {}
+    loadingPageOpened: true,
+    openedPost: {},
+    errorPageOpened: false
 }
 
 export const postSlice = createSlice({
@@ -17,10 +17,13 @@ export const postSlice = createSlice({
         openPost:(state,openedPost) => {
             state.openedPost = openedPost.payload
         },
+        setLoading:(state,action) => {
+            state.loadingPageOpened = action.payload
+        },
 
     },
 })
 
-export const {  setPosts, openPost  } = postSlice.actions
+export const {  setPosts, openPost, setLoading  } = postSlice.actions
 
 export default postSlice.reducer

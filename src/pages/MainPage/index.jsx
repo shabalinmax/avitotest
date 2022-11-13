@@ -4,7 +4,8 @@ import {useSelector, useDispatch} from "react-redux";
 import {openPost} from "../../redux/slices/postsSlice";
 import {useHistory} from "react-router-dom";
 
-const MainPage = ({lastHundredPosts, getPosts}) => {
+const MainPage = ({getPosts}) => {
+    const posts = useSelector((state) => state.posts.posts)
     const dispatch = useDispatch()
     let history = useHistory()
     let clickPost = (post) => {
@@ -13,8 +14,8 @@ const MainPage = ({lastHundredPosts, getPosts}) => {
     }
     return (
         <div className={'MainPage'} >
-            <button onClick={() => getPosts()} style={{margin: '15px'}} className='defaultBtn'>refresh news</button>
-            {lastHundredPosts.map((post) =>
+            <button className='defaultBtn' onClick={() => getPosts(true)} style={{margin: '15px'}}>refresh news</button>
+            {posts.map((post) =>
                 <div key={post.id} onClick={() => clickPost(post) } className={'post'}>
                     <div className="postTitle">
                         {post.title}
