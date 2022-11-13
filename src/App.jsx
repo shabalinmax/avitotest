@@ -6,10 +6,11 @@ import MainPage from "./pages/MainPage";
 import PostPage from "./pages/PostPage";
 import Header from "./components/Header";
 import {useSelector, useDispatch} from "react-redux";
-import {setPosts} from "./redux/slices/postsSlice";
-
+import {setPosts,} from "./redux/slices/postsSlice";
+import Loader from "./components/Loader";
 function App() {
-
+    const [errorPageOpened, setErrorPageOpened ] = React.useState(false)
+    const [isLoadingPosts, setIsLoadingPosts ] = React.useState(true)
     const posts = useSelector((state) => state.posts.posts)
     const dispatch = useDispatch()
     const [lastHundredPosts, setLastHundredPosts] = React.useState([])
@@ -24,6 +25,10 @@ function App() {
                 values.map((el) => el.data)
             )
             .then((finalResponse) => dispatch(setPosts(finalResponse)))
+            .then(() => (setIsLoadingPosts(false)))
+            .catch(function(err) {
+                console.log(err.message)
+            })
     }
     React.useEffect(() => {
         getNewPosts()
@@ -42,10 +47,14 @@ function App() {
                             <PostPage/>
                         </Route>
                         <Route path="/">
-                            <MainPage
-                                getPosts={getNewPosts}
-                                lastHundredPosts={posts}
-                            />
+                            {
+                                isLoadingPosts ?
+                                    <Loader/>
+                                    :
+                                    <MainPage
+                                        getPosts={getNewPosts}
+                                        lastHundredPosts={posts}/>
+                            }
                         </Route>
                     </Switch>
                 {/* routing here */}

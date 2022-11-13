@@ -1,13 +1,21 @@
 import React from 'react';
 import './MainPage.css'
 import {useSelector, useDispatch} from "react-redux";
+import {openPost} from "../../redux/slices/postsSlice";
+import {useHistory} from "react-router-dom";
 
 const MainPage = ({lastHundredPosts, getPosts}) => {
+    const dispatch = useDispatch()
+    let history = useHistory()
+    let clickPost = (post) => {
+        history.push('/postPage')
+        dispatch(openPost(post))
+    }
     return (
         <div className={'MainPage'} >
-            <button onClick={() => getPosts()} style={{margin: '15px'}} className='defaultBtn'>Обновить</button>
+            <button onClick={() => getPosts()} style={{margin: '15px'}} className='defaultBtn'>refresh news</button>
             {lastHundredPosts.map((post) =>
-                <div  key={post.id} className={'post'} >
+                <div key={post.id} onClick={() => clickPost(post) } className={'post'}>
                     <div className="postTitle">
                         {post.title}
                     </div>

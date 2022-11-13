@@ -1,0 +1,28 @@
+.postPage {
+  padding: 10px;
+}
+.postPage button {
+  margin: 10px;
+}
+.postPage .postTitleAndLink span {
+  font-weight: 300;
+  font-size: 20px;
+}
+.postPage .postAuthorAndTime .author {
+  color: #00608b;
+}
+.postPage .postAuthorAndTime .time {
+  color: #00608b;
+}
+.postPage .comments .commentWrapper {
+  margin: 10px;
+  padding: 10px;
+}
+.postPage .comments .commentWrapper comment {
+  padding: 10px;
+}
+.postPage .comments .commentWrapper button {
+  padding: 5px;
+}
+
+/*# sourceMappingURL=PostPage.css.map */

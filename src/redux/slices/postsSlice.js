@@ -1,9 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice,  } from '@reduxjs/toolkit'
 
 const initialState = {
     posts: [],
     loading: false,
-    error: '',
+    error: false,
+    openedPost: {}
 }
 
 export const postSlice = createSlice({
@@ -12,13 +13,14 @@ export const postSlice = createSlice({
     reducers: {
         setPosts: (state, newPosts) => {
             state.posts = newPosts.payload
-            console.log(newPosts)
         },
-
+        openPost:(state,openedPost) => {
+            state.openedPost = openedPost.payload
+        },
 
     },
 })
 
-export const {  setPosts  } = postSlice.actions
+export const {  setPosts, openPost  } = postSlice.actions
 
 export default postSlice.reducer
